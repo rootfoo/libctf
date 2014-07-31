@@ -1,0 +1,48 @@
+
+
+
+{
+	"linux x86 execve 1": {
+		"description" : "execve /bin/sh - 21 bytes",
+		"platform" : "Linux x86",
+		"size" : 21,
+		"url" : "http://shell-storm.org/shellcode/files/shellcode-575.php",
+		"author" : "Geyslan G. Bem",
+		"shellcode" : "agtYmVJoLy9zaGgvYmluieMxyc2A"
+	},
+
+	"linux x86 execve 2": {
+		"description" : "execve /bin/sh - 21 bytes",
+		"platform" : "Linux x86",
+		"size" : 21,
+		"url" : "http://shell-storm.org/shellcode/files/shellcode-841.php",
+		"author" : "Geyslan G. Bem",
+		"shellcode" : "Mcn34bALUWgvL3NoaC9iaW6J482A"
+	},
+
+	"linux x86 gets execve" : {
+		"description" : "Local shellcode for stdin re-open and /bin/sh exec. It closes stdin descriptor and re-opens /dev/tty, then does an execve() of /bin/sh. Useful to exploit some gets() buffer overflows in an elegant way...", 
+		"platform" : "Linux x86",
+		"size" : 55,
+		"url" : "http://www.exploit-db.com/exploits/13357/",
+		"author" : "Marco Ivaldi",
+		"shellcode" : "McAx27AGzYBTaC90dHloL2RldonjMclmuRInsAXNgDHAUGgvL3NoaC9iaW6J41BTieGZsAvNgA=="
+	},
+
+	"linux x86 hello world" : {
+		"description" : "write(STDOUT, hello world, len)",
+		"platform" : "Linux x86",
+		"size" : 40,
+		"url" : "http://lucifer.phiral.net/shellcode.htm",
+		"author" : "",
+		"shellcode" : "McAx2zHJMdKwBLMB6wVZsg3NXHg4MOj2////SGVsbG8gV29ybGQgIQ=="
+	}
+
+
+
+}	
+
+
+
+
+
