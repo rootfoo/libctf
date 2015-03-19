@@ -19,13 +19,13 @@ class Sock(object):
 		self._port = port
 		self.history = []
 
-	def read(self, count=1024):
+	def read(self, count=4096):
 		data = ''
 		try:
 			data = self.socket.recv(count)
 			self.history.append(('>',data))
 
-		except timeout:
+		except socket.timeout:
 			# timeout doesn't necesarily mean the connection is closed
 			pass
 
@@ -38,7 +38,7 @@ class Sock(object):
 		flag = True
 		while flag:
 			try:
-				chunk = self.sock.recv(1024)
+				chunk = self.socket.recv(1024)
 			except socket.timeout:
 				chunk = ""
 			finally:
@@ -71,7 +71,7 @@ class Sock(object):
 	def reconnect(self):
 		self.socket.connect((self._host,self._port))
 
-	def interact(self):
+	def interact(self, newline="\n"):
 
 		while True:
 			try:
@@ -86,6 +86,10 @@ class Sock(object):
 				for i in input_ready:
 					if i == sys.stdin:
 						data = sys.stdin.readline()
+						# patch up newlines
+						if not data.endswith(newline):
+							data = data.strip('\n') + newline
+
 						if data:
 							self.history.append(('<', data))
 							self.socket.send(data)

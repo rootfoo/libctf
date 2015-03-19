@@ -16,6 +16,10 @@ def unpack64(data):
 	"""unpack 64-bit little-endian"""
 	return struct.unpack('<Q', data)
 
+def bits(data):
+	"""return bit string represntation of data"""
+	return [format(ord(c),'08b') for c in data]
+
 
 def hexdump(data, offsets=True, columns=8, blocksize=4):                                  
 	"""get a printable hexdump display of the data"""                                     
