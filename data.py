@@ -1,20 +1,20 @@
-from struct import pack, unpack
+import struct
 
-def pack32(data):
+def pack(data):
 	"""pack 32-bit little-endian"""
-	return pack('<I', data)
+	return struct.pack('<I', data)
 
-def unpack32(data):
+def unpack(data):
 	"""unpack 32-bit little-endian"""
-	return unpack('<I', data)
+	return struct.unpack('<I', data)
 
 def pack64(data):
 	"""pack 64-bit little-endian"""
-	return pack('<Q', data)
+	return struct.pack('<Q', data)
 
 def unpack64(data):
 	"""unpack 64-bit little-endian"""
-	return unpack('<Q', data)
+	return struct.unpack('<Q', data)
 
 
 def hexdump(data, offsets=True, columns=8, blocksize=4):                                  

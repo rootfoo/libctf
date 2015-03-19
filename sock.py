@@ -32,16 +32,22 @@ class Sock(object):
 		return data
 
 	def readall(self):
+		# readall data from sock
 		data = ""
 		chunk = ""
-		while chunk is not "":
+		flag = True
+		while flag:
 			try:
-				chunk = self.socket.recv(1024)
-			except timeout:
+				chunk = self.sock.recv(1024)
+			except socket.timeout:
 				chunk = ""
 			finally:
-				data += chunk
-			
+				if len(chunk) > 0:
+					data += chunk
+					chunk = ""
+				else:
+					flag = False
+
 		return data
 
 
