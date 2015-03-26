@@ -1,6 +1,7 @@
 import socket
 import select
 import sys
+from data import hexdump
 
 
 class Sock(object):
@@ -15,11 +16,30 @@ class Sock(object):
 		self.socket = socket.socket(family, stype)
 		self.socket.settimeout(2)
 		self.socket.connect((host,port))
+		self._family = family
+		self._stype = stype
 		self._host = host
 		self._port = port
 		self.history = []
+		self.verbose = False
 
-	def read(self, count=4096):
+
+	def read(self, count=None):
+		data = ''
+		if count:
+			data = self._read(count)
+		else:
+			data = self._readall()
+		if self.verbose:
+			print hexdump(data)
+		return data
+
+
+	def recv(self, count=None):
+		return self.read(count)
+
+
+	def _read(self, count=4096):
 		data = ''
 		try:
 			data = self.socket.recv(count)
@@ -31,8 +51,8 @@ class Sock(object):
 
 		return data
 
-	def readall(self):
-		# readall data from sock
+	def _readall(self):
+		# read all data from sock
 		data = ""
 		chunk = ""
 		flag = True
@@ -48,17 +68,21 @@ class Sock(object):
 				else:
 					flag = False
 
+		self.history.append(('>',data))
 		return data
 
 
-	def readuntil(self, delim):
-		raise NotImplementedError
-
+	def send(self, data):
+		self.write(data)
 
 	def write(self, data):
 		try:
 			self.socket.send(data)
 			self.history.append(('<',data))
+			
+			if self.verbose:
+				print hexdump(data)
+			return data
 
 		except Exception as e:
 			self.socket.close()
@@ -69,7 +93,11 @@ class Sock(object):
 		self.socket.close()
 
 	def reconnect(self):
+		self.socket.close()
+		self.socket = socket.socket(self._family, self._stype)
+		self.socket.settimeout(2)
 		self.socket.connect((self._host,self._port))
+
 
 	def interact(self, newline="\n"):
 
