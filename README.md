@@ -9,7 +9,10 @@ Libctf is a CTF framework written by meta of the Neg9 CTF team. The framework is
 	print shelldb.list()
 	shellcode = shelldb.get('linux x86 execve 1')
 	sock = Sock('localhost',9090)
-	payload = 'A'*100 + pack32(0x11223344) + shellcode 
+	sock.verbose = True
+	payload = pack('A'*100, 0x11223344, shellcode)
+	print hexdump(payload)
+	sock.recv()
 	sock.send(payload)
 	sock.interact()
 
