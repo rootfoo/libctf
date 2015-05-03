@@ -1,6 +1,7 @@
 from sock import * 
 from data import *
-from shellcode import * 
+from shellcode import *
+from pattern import *
 
 try:
 	# Try to import the ipython interactive shell
@@ -8,4 +9,5 @@ try:
 except ImportError as e:
 	import sys
 	sys.stderr.write('Warning: IPython embed could not be imported')
+
 

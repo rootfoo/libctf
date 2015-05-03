@@ -1,0 +1,115 @@
+#!/usr/bin/python
+
+import sys
+from data import pack, pack64
+from pattern import *
+from shellcode import *
+
+
+help_msg = """\
+Usage: {prog} [-aN] [-pN] [-sN] [0xADDR] ["STRING"] [-f PATTERN]
+  -a N			"A"*N
+  -l			List all shellcodes
+  -s N			Shellcode #N from shellstorm database
+  -p N			N bytes of cyclic pattern
+  -f PATTERN	Find offset of PATTERN
+  0xADDR		packed form of an integer (e.g. 0x41424344 --> "\\x44\\x43\\x42\\x41")
+  "STRING"		String literal (quotes removed by shell)
+
+"""
+
+
+
+def split_argv(options, argv):
+	"""
+	sys.argv is split on spaces: ["-x100", "-a", "20"]
+	This function splits it on options as well: ["-x", "100", "-a", "20"] 
+	"""
+	data = []
+	for x in argv:
+		for o in options:
+			if x.startswith(o):
+				parts = x.split(o)
+				if len(parts) == 2 and parts[1]:
+					data += (o, parts[1])
+					break
+		else:
+			data.append(x)
+	return data
+
+
+
+def usage():
+	sys.stderr.write(help_msg.format(prog=sys.argv[0]))
+	sys.exit(1)
+
+
+
+if __name__=='__main__':
+
+	if len(sys.argv) < 2:
+		usage()
+
+	# shellcode database
+	shellcode = Shellcode()
+
+	# iterate argv 
+	parts = []
+	options = ['-a','-l','-f','-p','-s']
+	argv = iter(split_argv(options, sys.argv[1:]))
+	for arg in argv:
+		try:
+		
+			# list shellcodes
+			if arg == '-l':
+				shellcode.pprint()
+				sys.exit(0)
+
+			# Pattern search
+			elif arg == '-f':
+				val = next(argv)
+				offset = pattern_search(val)
+				if offset >= 0:
+					print "Pattern at offset: {0}".format(offset)
+				else:
+					print "Pattern not found"
+				sys.exit(0)
+
+			# Pattern create
+			elif arg == '-p':
+				n = int(next(argv))
+				parts.append(pattern_gen(n))
+
+			# AAAA
+			elif arg == '-a':
+				n = int(next(argv))
+				parts.append('A'*n)
+
+			# shellcode
+			elif arg == '-s':
+				n = int(next(argv))
+				parts.append(shellcode.get(n))
+
+			# hex address
+			elif arg.startswith('0x'):
+				parts.append(int(arg,16))
+			
+			# string literal
+			else:
+				parts.append(arg)
+	
+		except StopIteration as e:
+			usage()
+
+		except ValueError as e:
+			usage()
+
+	# pack and write to stdout
+	sys.stdout.write(pack(*parts))
+
+
+
+
+
+
+
