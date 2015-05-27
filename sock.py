@@ -12,16 +12,16 @@ class Sock(object):
 	read_until_string
 	read_all (for slow connections)
 	"""
-	def __init__(self, host, port, family=socket.AF_INET, stype=socket.SOCK_STREAM):
+	def __init__(self, host, port, family=socket.AF_INET, stype=socket.SOCK_STREAM, timeout=.2, verbose=False):
 		self.socket = socket.socket(family, stype)
-		self.socket.settimeout(2)
+		self.socket.settimeout(timeout)
 		self.socket.connect((host,port))
 		self._family = family
 		self._stype = stype
 		self._host = host
 		self._port = port
 		self.history = []
-		self.verbose = False
+		self.verbose = verbose
 
 
 	def read(self, count=None):
@@ -74,6 +74,13 @@ class Sock(object):
 
 	def send(self, data):
 		self.write(data)
+
+	def sr(self, data=''):
+		"""send(data) && return recv()"""
+		if data:
+			self.write(data)
+		return self.read()
+
 
 	def write(self, data):
 		try:
