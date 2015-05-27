@@ -1,9 +1,7 @@
 #!/usr/bin/python
 
 import sys
-from data import pack, pack64
-from pattern import *
-from shellcode import *
+from libctf import *
 
 
 help_msg = """\
