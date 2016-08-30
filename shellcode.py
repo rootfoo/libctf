@@ -104,7 +104,7 @@ def shellcode(name, **kwargs):
     global factory 
     if not factory:
         factory = ShellcodeFactory()
-    return shellfactory.get(name, **kwargs) 
+    return factory.get(name, **kwargs) 
 
 
 
