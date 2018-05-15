@@ -1,27 +1,38 @@
 import struct
 import string
 
-def pack(*args):
-	return _pack(args, '<I')
+
+def pack_int_64(num):
+    return struct.pack('<Q', num) if (num > 0) else struct.pack('<q', num)
+
+def pack_int_32(num):
+    return struct.pack('<I', num) if (num > 0) else struct.pack('<i', num)
 
 
-def pack64(*args):
-	return _pack(args, '<Q')
 
-
-def _pack(packlist, fmt='<I'):
+def rop(*args):
 	"""
-	Pack a heterogeneous list of strings and integers.
-	All integers will be packed according to the struct format.
-	Returns all items concatinated as a string.
-	
-	'<I' : 32-bit little endian
-	'<Q' : 64-bit little endian
+	Pack a heterogeneous list of strings and integers for ROP payload.
+	Negative integers packed as signed values, and positive packed as signed. 
 	"""
 	packed = ""
-	for x in packlist:
-		if type(x) == int:
-			packed += struct.pack(fmt, x)
+	for x in args:
+		if type(x) == int or type(x) == long:
+			packed += pack_int_32(x)
+		else:
+			packed += x
+	return packed
+
+
+def rop64(*args):
+	"""
+	Pack a heterogeneous list of strings and integers for ROP payload.
+	Negative integers packed as signed values, and positive packed as signed. 
+	"""
+	packed = ""
+	for x in args:
+		if type(x) == int or type(x) == long:
+			packed += pack_int_64(x)
 		else:
 			packed += x
 	return packed
