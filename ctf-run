@@ -1,0 +1,62 @@
+#!/bin/bash -e
+
+# defaults
+PORT=8989
+TRACE=""
+
+
+usage(){
+    echo "$0 - Run program with socat and, optionally, ltrace or strace"
+    echo " "
+    echo "$0 [options] application [arguments]"
+    echo " "
+    echo "options:"
+    echo "	-h          show brief help"
+    echo "	-p <port>   contact a specific PulseAudio server"
+    echo "	-l 			debug with ltrace -if"
+    echo "	-s 			debug with strace -if"
+}
+
+
+while getopts 'p:ls' param ; do
+    case $param in
+        p)
+			PORT="$OPTARG"
+			;;
+      
+		l)
+			TRACE="ltrace -if"
+			;;
+		
+		s)
+			TRACE="strace -if"
+			;;
+
+		*)
+            usage;
+			exit 0
+			;;
+	esac
+done
+
+# shift past options
+shift $(( $OPTIND - 1 ))
+
+# ensure program file exists and is executable (strace will error but ltrace wont)
+if [ ! -x "$1" ]; then
+    echo "Cannot stat program"
+    exit 0
+fi
+
+# program with arguments
+if [ "$TRACE" != "" ]; then
+    PROG="$TRACE $@"
+else
+    PROG="$@"
+fi
+
+# exec program with socat
+exec socat -v tcp4-l:$PORT,fork,reuseaddr exec:"'$PROG'"
+
+
+
