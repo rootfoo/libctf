@@ -1,14 +1,14 @@
 import ctypes
 import pkgutil
 import json
-from capstone import *
+#from capstone import *
 from data import splitevery
 import struct
 import socket
 
 JSON_FILE = 'shellcode.json'
 factory = None
-
+JSON_FILE = '/usr/local/lib/python2.7/dist-packages/libctf/shellcode.json'
 
 def iptoint(ip):
     """convert IPv4 address to integer"""

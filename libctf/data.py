@@ -2,15 +2,29 @@ import struct
 import string
 
 
-def pack_int_64(num):
-    return struct.pack('<Q', num) if (num > 0) else struct.pack('<q', num)
+def pack64(num):
+	"""struct.pack 64-bit int"""
+	return struct.pack('<Q', num) if (num > 0) else struct.pack('<q', num)
 
-def pack_int_32(num):
-    return struct.pack('<I', num) if (num > 0) else struct.pack('<i', num)
+def pack32(num):
+	"""struct.pack 32-bit int"""
+	return struct.pack('<I', num) if (num > 0) else struct.pack('<i', num)
 
+def unpack64(data):
+	"""struct.unpack 64-bit unsigned int"""
+	return struct.unpack('<Q', data)[0]
+
+def unpack32(data):
+	"""struct.unpack 32-bit unsigned int"""
+	return struct.unpack('<I', data)[0]
 
 
 def rop(*args):
+	"""Alias for rop64"""
+	return rop64(args)
+
+
+def rop32(*args):
 	"""
 	Pack a heterogeneous list of strings and integers for ROP payload.
 	Negative integers packed as signed values, and positive packed as signed. 
@@ -18,7 +32,7 @@ def rop(*args):
 	packed = ""
 	for x in args:
 		if type(x) == int or type(x) == long:
-			packed += pack_int_32(x)
+			packed += pack32(x)
 		else:
 			packed += x
 	return packed
@@ -32,7 +46,7 @@ def rop64(*args):
 	packed = ""
 	for x in args:
 		if type(x) == int or type(x) == long:
-			packed += pack_int_64(x)
+			packed += pack64(x)
 		else:
 			packed += x
 	return packed

@@ -44,3 +44,4 @@ class Process(object):
 		raw_input("attach gdb now: \n  $ gdb -p {pid}\n  (gdb) attach {pid}\n".format(pid=self.process.pid))
 
 
+	

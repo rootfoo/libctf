@@ -16,16 +16,41 @@ Libctf is a CTF framework written by meta of the Neg9 CTF team. The framework is
 	sock.send(payload)
 	sock.interact()
 
-# Installation
 
-To install to your home directory (~/.local/lib/python2.7/site-packages/):
+# Install
 
-	python setup.py install --user
+## From outside the project directory
+```
+sudo pip install libctf
+```
 
-To install for all users (/usr/local/lib/python2.7/dist-packages/):
-	
-	sudo python setup.py install
+## From the directory containing setup.py
+```
+sudo pip install .
+```
 
+## Verify
+```
+pip show photorg
+```
 
+## Uninstall
+```
+sudo pip uninstall photorg
+```
 
+## Developer install, add project folder to python path
+```
+sudo pip install -e .
+```
 
+## Developer uninstall
+
+Remove path entry from
+```
+/usr/local/lib/python2.7/dist-packages/easy-install.pth
+```
+Delete link file
+```
+rm /usr/local/lib/python2.7/dist-packages/libctf.egg-link
+```

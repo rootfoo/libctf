@@ -4,14 +4,12 @@ from distutils.core import setup
 
 setup(name='libctf',
 	version='0.2',
-	description='CTF framework by meta',
+	description="lightweight CTF and exploit development framework",
 	author='Marcus Hodges',
 	author_email='0xmeta@gmail.com',
 	url='http://rootfoo.org',
-	license="http://www.opensource.org/licenses/BSD-3-Clause",
-	package_dir={'libctf':''},
-	package_data={'libctf': ['shellcode.json']},
-	packages=['libctf'],
-	scripts=['ctf-payload']
+	license="MIT",
+    packages=['libctf'], 
+	package_data={'libctf': ['data/shellcode.json']},
+	scripts=['bin/ctf-payload', 'bin/ctf-run']
 	)
-

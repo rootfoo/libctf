@@ -49,7 +49,7 @@ if __name__=='__main__':
 		usage()
 
 	# shellcode database
-	shellcode = Shellcode()
+    #shellcode = Shellcode()
 
 	# iterate argv 
 	parts = []
@@ -103,7 +103,7 @@ if __name__=='__main__':
 			usage()
 
 	# pack and write to stdout
-	sys.stdout.write(pack(*parts))
+	sys.stdout.write(rop(*parts))
 
 
 
