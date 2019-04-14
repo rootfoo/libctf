@@ -6,15 +6,12 @@ TRACE=""
 
 
 usage(){
-    echo "$0 - Run program with socat and, optionally, ltrace or strace"
-    echo " "
     echo "$0 [options] application [arguments]"
     echo " "
-    echo "options:"
-    echo "	-h          show brief help"
-    echo "	-p <port>   contact a specific PulseAudio server"
-    echo "	-l 			debug with ltrace -if"
-    echo "	-s 			debug with strace -if"
+    echo "Run program with socat and, optionally, ltrace or strace"
+    echo "  -h    show brief help"
+    echo "  -l    debug with ltrace -if"
+    echo "  -s    debug with strace -if"
 }
 
 
@@ -44,7 +41,7 @@ shift $(( $OPTIND - 1 ))
 
 # ensure program file exists and is executable (strace will error but ltrace wont)
 if [ ! -x "$1" ]; then
-    echo "Cannot stat program"
+	usage
     exit 0
 fi
 
