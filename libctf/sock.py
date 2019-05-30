@@ -12,13 +12,11 @@ class Sock(object):
     read_until_string
     read_all (for slow connections)
     """
-    def __init__(self, host, port, family=socket.AF_INET, stype=socket.SOCK_STREAM, timeout=.1, verbose=True, newline='', color=True):
-        self.socket = socket.socket(family, stype)
-        self.socket.settimeout(timeout)
-        self.socket.connect((host,port))
+    def __init__(self, host, port, verbose=True, timeout=.1, newline='', color=True):
+        socket.setdefaulttimeout(timeout)
+	# supports ipv4 and ipv6
+        self.socket = socket.create_connection((host,port))
         self._timeout = timeout
-        self._family = family
-        self._stype = stype
         self._host = host
         self._port = port
         self._tail = ""
